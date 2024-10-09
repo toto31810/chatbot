@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chatbot de Cybersécurité</title>
+    <link rel="stylesheet" href="/static/styles.css">
+</head>
+<body>
+    <div class="chat-icon" id="chatIcon">
+        <img src="/static/chat-symbole-de-bulles-ovales.png" alt="Chat Icon">
+    </div>
+    <div class="chat-container" id="chatContainer">
+        <div class="chat-header">
+            <h2>Chatbot</h2>
+            <span class="close-btn" id="closeBtn">&times;</span>
+        </div>
+        <div class="chat-box" id="chat-box">
+            
+        </div>
+        <div class="chat-input">
+            <input type="text" id="user-input" placeholder="Tapez votre message...">
+            <button onclick="sendMessage()">Envoyer</button>
+        </div>
+    </div>
+
+    <script src="/static/script.js"></script>
+</body>
+</html>

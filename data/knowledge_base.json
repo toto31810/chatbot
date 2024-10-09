@@ -1,0 +1,17 @@
+{
+    "questions": [
+        {
+            "question": "Qu'est-ce qu'un pare-feu ?",
+            "response": "Un pare-feu est un système de sécurité réseau qui surveille et contrôle le trafic réseau entrant et sortant en fonction de règles de sécurité prédéfinies."
+        },
+        {
+            "question": "Comment puis-je protéger mon mot de passe ?",
+            "response": "Pour protéger votre mot de passe, utilisez des mots de passe forts et uniques pour chaque compte. Utilisez également un gestionnaire de mots de passe pour les stocker en toute sécurité."
+        },
+        {
+            "question": "Qu'est-ce que le phishing ?",
+            "response": "Le phishing est une technique de fraude utilisée pour tromper les utilisateurs et les inciter à divulguer des informations personnelles sensibles, telles que des mots de passe et des numéros de carte de crédit."
+        }
+        
+    ]
+}
