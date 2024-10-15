@@ -2,15 +2,50 @@ document.addEventListener('DOMContentLoaded', function() {
     const chatIcon = document.getElementById('chatIcon');
     const chatContainer = document.getElementById('chatContainer');
     const closeBtn = document.getElementById('closeBtn');
+    const chatInput = document.getElementById('user-input');
 
     chatIcon.addEventListener('click', function() {
-        chatContainer.style.display = 'block';
+        chatContainer.style.display = chatContainer.style.display === 'block' ? 'none' : 'block';
+        if (chatContainer.style.display === 'block') {
+            displayPredefinedQuestions();
+        }
     });
 
     closeBtn.addEventListener('click', function() {
         chatContainer.style.display = 'none';
     });
+
+    chatInput.addEventListener('keypress', function(event) {
+        if (event.key === 'Enter') {
+            sendMessage();
+        }
+    });
 });
+
+// Questions prédéfinies
+const predefinedQuestions = [
+    "Comment réinitialiser mon mot de passe ?",
+    "Quels sont les tarifs des services ?",
+    "Comment contacter le support ?"
+];
+
+function displayPredefinedQuestions() {
+    const questionContainer = document.getElementById('predefined-questions');
+    questionContainer.innerHTML = ''; // Nettoyer les anciennes questions
+
+    predefinedQuestions.forEach(question => {
+        const questionButton = document.createElement('button');
+        questionButton.className = 'predefined-question';
+        questionButton.textContent = question;
+        questionButton.onclick = () => handlePredefinedQuestion(question);
+        questionContainer.appendChild(questionButton);
+    });
+}
+
+function handlePredefinedQuestion(question) {
+    document.getElementById('user-input').value = question;
+    sendMessage();
+}
 
 function sendMessage() {
     const userInput = document.getElementById('user-input').value;
@@ -37,22 +72,10 @@ function sendMessage() {
     .then(response => response.json())
     .then(data => {
         chatBox.removeChild(loadingMessage);
-        if (data.response) {
-            const botMessage = document.createElement('div');
-            botMessage.className = 'message bot';
-            botMessage.textContent = data.response;
-            chatBox.appendChild(botMessage);
-        } else if (data.choices && data.choices[0] && data.choices[0].text) {
-            const botMessage = document.createElement('div');
-            botMessage.className = 'message bot';
-            botMessage.textContent = data.choices[0].text;
-            chatBox.appendChild(botMessage);
-        } else {
-            const botMessage = document.createElement('div');
-            botMessage.className = 'message bot';
-            botMessage.textContent = "Désolé, je n'ai pas pu générer de réponse.";
-            chatBox.appendChild(botMessage);
-        }
+        const botMessage = document.createElement('div');
+        botMessage.className = 'message bot';
+        botMessage.textContent = data.response || "Désolé, je n'ai pas pu générer de réponse.";
+        chatBox.appendChild(botMessage);
     })
     .catch(error => {
         chatBox.removeChild(loadingMessage);

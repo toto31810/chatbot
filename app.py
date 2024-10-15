@@ -9,8 +9,8 @@ from sklearn.metrics.pairwise import cosine_similarity
 app = Flask(__name__)
 
 # api Mistral
-API_KEY = 'your_api_key_here'
-API_URL = 'https://api.mistral.ai/v1/generate'
+API_KEY = 'NmXyBN6Iv6I2295kvWTZ3Ji50UhxpDZo'
+API_URL = 'https://api.mistral.ai/v1/chat'  # URL mise à jour
 
 # base de connaissances
 knowledge_base_path = os.path.join('data', 'knowledge_base.json')
@@ -34,8 +34,8 @@ def get_response_from_mistral(user_input):
         'Content-Type': 'application/json'
     }
     data = {
-        'prompt': user_input,
-        'max_tokens': 150
+        'model': 'mistral-large-latest',  # Modèle spécifié
+        'messages': [{'role': 'user', 'content': user_input}]  # Format de message mis à jour
     }
     try:
         response = requests.post(API_URL, headers=headers, json=data)
@@ -65,11 +65,13 @@ def get_response_from_knowledge_base(user_input):
 def chat():
     user_input = request.json.get('message')
     response = get_response_from_knowledge_base(user_input)
-    if response:
+    
+    if response:  # Si une réponse est trouvée dans la base de connaissances
         return jsonify({'response': response})
-    else:
-        response = get_response_from_mistral(user_input)
-        return jsonify(response)
+    
+    # Sinon, interroger l'API Mistral
+    response = get_response_from_mistral(user_input)
+    return jsonify(response)
 
 @app.route('/')
 def home():

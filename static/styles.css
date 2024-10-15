@@ -1,14 +1,19 @@
+/* Fond dégradé en mouvement */
 body {
-    font-family: Arial, sans-serif;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     margin: 0;
     padding: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    background-color: #f0f0f0;
+    background-color: #f9f9f9;
 }
 
+/* Animation pour le fond dégradé */
+@keyframes gradientBackground {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+/* Style pour l'icône de chat */
 .chat-icon {
     position: fixed;
     bottom: 20px;
@@ -22,6 +27,12 @@ body {
     justify-content: center;
     cursor: pointer;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    z-index: 1000; /* Assure que l'icône de chat est toujours visible */
+}
+
+/* Cache l'icône du chat lorsque le chat est ouvert */
+.chat-container.open ~ .chat-icon {
+    display: none;
 }
 
 .chat-icon img {
@@ -29,21 +40,29 @@ body {
     height: 30px;
 }
 
+/* Conteneur du chat */
 .chat-container {
     position: fixed;
-    bottom: 90px;
+    bottom: 90px; /* Déplacé vers le haut pour éviter le bouton */
     right: 20px;
-    width: 400px;
-    height: 600px;
+    width: 500px; /* Augmenté pour agrandir la fenêtre de chat */
+    height: 650px; /* Augmenté pour agrandir la fenêtre de chat */
     background-color: #fff;
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     overflow: hidden;
     display: none;
+    z-index: 999; /* Garde la fenêtre de chat visible */
 }
 
+/* Affiche le chat lorsque la classe "open" est ajoutée */
+.chat-container.open {
+    display: block;
+}
+
+/* En-tête du chat */
 .chat-header {
-    background-color: #007bff;
+    background-color: rgb(0, 0, 0); /* Pour rendre l'entête partiellement transparente */
     color: #fff;
     padding: 10px;
     border-top-left-radius: 10px;
@@ -62,15 +81,24 @@ body {
     cursor: pointer;
 }
 
+/* Zone de messages avec dégradé en mouvement */
 .chat-box {
-    height: 500px;
+    height: 520px; /* Ajusté pour correspondre à la nouvelle taille */
     overflow-y: scroll;
+    padding: 10px;
+    background: linear-gradient(45deg, #00c6ff, #0072ff, #ff6f61, #ffcc00); /* Appliquer le même dégradé */
+    background-size: 400% 400%;
+    animation: gradientBackground 10s ease infinite; /* Appliquer l'animation */
     border-bottom: 1px solid #ddd;
 }
 
+/* Input de chat */
 .chat-input {
     display: flex;
     padding: 10px;
+    background-color: #fff;
+    border-top: 1px solid #ddd;
+    box-sizing: border-box;
 }
 
 .chat-input input {
@@ -90,12 +118,15 @@ body {
     cursor: pointer;
 }
 
+/* Messages utilisateur et bot avec emojis */
 .message {
     margin-bottom: 10px;
     padding: 10px;
     border-radius: 10px;
     max-width: 70%;
     word-wrap: break-word;
+    display: flex;
+    align-items: center;
 }
 
 .message.user {
@@ -113,7 +144,40 @@ body {
     margin-left: 10px;
 }
 
+/* Emoji ajoutés à côté des messages */
+.message.user::before {
+    content: '😊';
+    margin-right: 10px;
+}
+
+.message.bot::before {
+    content: '🤖';
+    margin-right: 10px;
+}
+
 .loading {
     text-align: left;
     color: #888;
+}
+
+/* Questions prédéfinies */
+.predefined-questions {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 10px;
+}
+
+.predefined-question {
+    background-color: #f1f1f1;
+    border: none;
+    padding: 10px;
+    margin: 5px 0;
+    cursor: pointer;
+    border-radius: 5px;
+    text-align: left;
+    font-weight: bold;
+}
+
+.predefined-question:hover {
+    background-color: #ddd;
 }
