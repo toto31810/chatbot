@@ -33,6 +33,13 @@ function displayPredefinedQuestions() {
     const questionContainer = document.getElementById('predefined-questions');
     questionContainer.innerHTML = ''; // Nettoyer les anciennes questions
 
+    // Affiche la question d'accueil
+    const welcomeMessage = document.createElement('div');
+    welcomeMessage.className = 'message bot';
+    welcomeMessage.textContent = "Bonjour, en quoi puis-je vous aider ?";
+    questionContainer.appendChild(welcomeMessage);
+
+    // Affiche les questions prédéfinies
     predefinedQuestions.forEach(question => {
         const questionButton = document.createElement('button');
         questionButton.className = 'predefined-question';
@@ -41,6 +48,7 @@ function displayPredefinedQuestions() {
         questionContainer.appendChild(questionButton);
     });
 }
+
 
 function handlePredefinedQuestion(question) {
     document.getElementById('user-input').value = question;

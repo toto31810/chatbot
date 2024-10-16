@@ -2,15 +2,11 @@ from flask import Flask, request, jsonify, render_template
 import requests
 import json
 import os
-import spacy
-from sklearn.feature_extraction.text import TfidfVectorizer
-from sklearn.metrics.pairwise import cosine_similarity
 
 app = Flask(__name__)
 
-# api Mistral
-API_KEY = 'NmXyBN6Iv6I2295kvWTZ3Ji50UhxpDZo'
-API_URL = 'https://api.mistral.ai/v1/chat'  # URL mise à jour
+# URL API Rasa
+RASA_URL = 'http://localhost:5005/webhooks/rest/webhook'  
 
 # base de connaissances
 knowledge_base_path = os.path.join('data', 'knowledge_base.json')
@@ -21,56 +17,28 @@ except FileNotFoundError:
     knowledge_base = {}
     print(f"Le fichier {knowledge_base_path} n'a pas été trouvé.")
 
-# spacy pour le français
-try:
-    nlp = spacy.load('fr_core_news_sm')
-except OSError as e:
-    print(f"Erreur lors du chargement du modèle spaCy: {e}")
-    nlp = None
-
-def get_response_from_mistral(user_input):
-    headers = {
-        'Authorization': f'Bearer {API_KEY}',
-        'Content-Type': 'application/json'
-    }
+def get_response_from_rasa(user_input):
     data = {
-        'model': 'mistral-large-latest',  # Modèle spécifié
-        'messages': [{'role': 'user', 'content': user_input}]  # Format de message mis à jour
+        'sender': 'user',  # Identifiant de l'utilisateur
+        'message': user_input  # Message de l'utilisateur
     }
+    
     try:
-        response = requests.post(API_URL, headers=headers, json=data)
-        response.raise_for_status()
-        return response.json()
+        response = requests.post(RASA_URL, json=data)
+        response.raise_for_status()  # Vérifie si la requête a réussi
+        return response.json()  # Retourne la réponse de Rasa
     except requests.exceptions.RequestException as e:
-        print(f"Erreur lors de l'appel à l'API Mistral: {e}")
-        return {'error': 'Erreur lors de l\'appel à l\'API Mistral'}
-
-def get_response_from_knowledge_base(user_input):
-    if not knowledge_base:
-        return None
-
-    questions = [question['question'] for question in knowledge_base['questions']]
-    responses = [question['response'] for question in knowledge_base['questions']]
-
-    vectorizer = TfidfVectorizer().fit_transform(questions + [user_input])
-    vectors = vectorizer.toarray()
-    similarity = cosine_similarity([vectors[-1]], vectors[:-1])
-
-    most_similar_index = similarity.argmax()
-    if similarity[0, most_similar_index] > 0.5:
-        return responses[most_similar_index]
-    return None
+        print(f"Erreur lors de l'appel à l'API Rasa: {e}")
+        return {'error': 'Erreur lors de l\'appel à l\'API Rasa'}
 
 @app.route('/chat', methods=['POST'])
 def chat():
     user_input = request.json.get('message')
-    response = get_response_from_knowledge_base(user_input)
-    
-    if response:  # Si une réponse est trouvée dans la base de connaissances
-        return jsonify({'response': response})
-    
-    # Sinon, interroger l'API Mistral
-    response = get_response_from_mistral(user_input)
+    response = get_response_from_rasa(user_input)
+
+    if 'error' in response:
+        return jsonify(response), 500  # Retourne une erreur en cas de problème
+
     return jsonify(response)
 
 @app.route('/')

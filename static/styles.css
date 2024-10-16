@@ -181,3 +181,88 @@ body {
 .predefined-question:hover {
     background-color: #ddd;
 }
+
+/* Styles par défaut (desktop) déjà présents */
+.chat-container {
+    position: fixed;
+    bottom: 90px;
+    right: 20px;
+    width: 500px;
+    height: 650px;
+    /* Autres styles... */
+}
+
+/* Adaptation pour les tablettes */
+@media (max-width: 768px) {
+    .chat-container {
+        width: 90%; /* La fenêtre de chat occupe 90% de la largeur de l'écran */
+        height: 500px; /* Ajuste la hauteur */
+        right: 5%; /* Espacement par rapport aux bords */
+        bottom: 20px; /* Repositionne en bas de l'écran */
+    }
+    
+    .chat-box {
+        height: 400px; /* Réduit la hauteur de la zone de messages */
+    }
+
+    .chat-input input {
+        padding: 8px; /* Ajuste la taille des inputs */
+    }
+
+    .chat-input button {
+        padding: 8px; /* Réduit le padding pour s'adapter aux petits écrans */
+    }
+}
+
+/* Adaptation pour les smartphones */
+@media (max-width: 480px) {
+    .chat-container {
+        width: 100%; /* Utilise toute la largeur de l'écran */
+        height: 450px; /* Réduit encore la hauteur pour les petits écrans */
+        right: 0;
+        bottom: 0;
+        border-radius: 0; /* Suppression des coins arrondis pour occuper tout l'espace */
+    }
+
+    .chat-header h2 {
+        font-size: 16px; /* Réduit la taille du titre */
+    }
+
+    .chat-box {
+        height: 300px; /* Réduit encore la zone de messages */
+    }
+
+    .chat-input input {
+        padding: 6px; /* Ajuste encore la taille des inputs */
+    }
+
+    .chat-input button {
+        padding: 6px; /* Réduit le bouton d'envoi */
+    }
+}
+
+/* Adaptation de l'icône de chat sur tablettes */
+@media (max-width: 768px) {
+    .chat-icon {
+        width: 50px;
+        height: 50px;
+    }
+
+    .chat-icon img {
+        width: 25px;
+        height: 25px;
+    }
+}
+
+/* Adaptation de l'icône de chat sur smartphones */
+@media (max-width: 480px) {
+    .chat-icon {
+        width: 40px;
+        height: 40px;
+    }
+
+    .chat-icon img {
+        width: 20px;
+        height: 20px;
+    }
+}
