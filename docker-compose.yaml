@@ -1,0 +1,52 @@
+volumes:
+  chatbot-mysql:
+
+networks:
+  database:
+    external: false
+
+services:
+  chatbot:
+    build:
+      context: .
+    env_file: .env
+    environment:
+      MYSQL_HOST: mysql
+      MYSQL_PORT: 3306
+      MYSQL_USER: server
+      MYSQL_DATABASE: chatbot
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+    networks:
+      - database
+
+  mysql:
+    image: mysql:latest
+    container_name: chatbot-mysql
+    restart: 'on-failure'
+    env_file: .env
+    environment:
+      MYSQL_USER: server
+      MYSQL_DATABASE: chatbot
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+    volumes:
+      - chatbot-mysql:/var/lib/mysql
+    networks:
+      - database
+    ports:
+      - 3306:3306
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: chatbot-pma
+    restart: 'on-failure'
+    environment:
+      PMA_HOST: mysql
+      PMA_PORT: 3306
+      PMA_ARBITRARY: 1
+    depends_on:
+      - mysql
+    networks:
+      - database
+    ports:
+      - 81:80

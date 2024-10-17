@@ -1,4 +1,6 @@
-Flask==2.0.1
-requests==2.25.1
-spacy==3.0.3
-scikit-learn==0.24.2
+flask
+flask-socketio
+mistralai
+python-dotenv
+SQLAlchemy
+mysql-connector-python

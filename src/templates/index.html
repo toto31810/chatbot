@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chatbot de Cybersécurité</title>
+    <link rel="stylesheet" href="/static/style/build/globals.css">
+</head>
+<body>
+	<section id="chatbot">
+		<header>
+			<p class="title">Chatbot</p>
+			<section id="controls">
+				<button class="feedback" type="button"></button>
+				<button class="close" type="button"></button>
+			</section>
+		</header>
+		<main>
+			<article class="introduction">
+				Bonjour! Je suis Chatbot,<br>
+				Comment puis-je vous aider ?
+			</article>
+			<div id="chat"></div>
+		</main>
+		<footer>
+			<form id="chatbot-form">
+				<input type="text" />
+				<button type="submit">Envoyer</button>
+			</form>
+			<p class="warning">L'IA peut produire des informations erronées.</p>
+		</footer>
+	</section>
+	<button type="button" id="chatbot-toggle">
+		open chatbot
+	</button>
+	<script src="/static/scripts/index.js"></script>
+</body>
+</html>

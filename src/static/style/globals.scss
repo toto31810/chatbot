@@ -1,0 +1,89 @@
+* {
+	box-sizing: border-box;
+  align-items: center;
+  justify-content: center;
+}
+
+body {
+	display: flex;
+	flex-direction: column;
+	align-items: end;
+	justify-content: flex-end;
+	height: 100dvh;
+	padding: 0;
+	margin: 0;
+  padding: 1rem;
+  gap: 1rem;
+}
+
+#chatbot {
+  height: 100%;
+  width: 100%;
+  background-color: #fff;
+  border: 1px solid #dad9da;
+  filter: drop-shadow(0 0 10px rgba(29, 30, 32, .12));
+  border-radius: 8px;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  grid-template-columns: 100%;
+  > header,
+  > main,
+  > footer { 
+    padding: 0.5rem;
+  }
+
+  > header {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    p.title {
+      margin: 0;
+    }
+    > #controls {
+      display: flex;
+      gap: 5px;
+      button {
+        height: 40px;
+        aspect-ratio: 1 / 1;
+        cursor: pointer;
+      }
+    }
+  }
+  > main {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    gap: .5rem;
+    .introduction {
+      border-radius: 18px;
+      width: 100%;
+      background-color: #f2f3f6;
+      padding: 1rem;
+    }
+    #chat {
+      height: 100%;
+      width: 100%;
+    }
+  }
+  > footer {
+    display: flex;
+    flex-direction: column;
+    gap: .5rem;
+    > form {
+      display: flex;
+      flex-direction: row;
+      gap: 5px;
+      width: 100%;
+      input {
+        width: 100%;
+      }
+    }
+    > p.warning {
+      margin: 0;
+      font-weight: light;
+      font-size: 0.85rem;
+    }
+  }
+}
