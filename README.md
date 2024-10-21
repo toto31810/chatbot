@@ -15,7 +15,8 @@ Ce projet est un chatbot de cybersécurité construit avec Flask. Il utilise une
 
 > Source virtual env
 > ```bash
-> source venv/bin/activate
+> ./venv/Scripts/Activate.ps1 # windows
+> source venv/bin/activate # linux / posix
 > ```
 
 > Install python dependencies
